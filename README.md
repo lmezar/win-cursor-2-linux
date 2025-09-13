@@ -89,8 +89,6 @@ cursor-converter/
 | **Dgn2** | `ne-resize`, `nesw-resize`, `sw-resize`, `size_bdiag` |
 | **Alternate** | `bottom_*_corner`, `top_*_corner`, `*_side`, `*-arrow`, `up_arrow` |
 
-## 🔧 Advanced Usage
-
 ### Custom Theme Installation
 ```bash
 # User installation
