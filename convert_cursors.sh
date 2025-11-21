@@ -247,16 +247,23 @@ convert_cursor_file() {
 	fi
 
 	for name in $rest; do
-		# Only convert if primary
 		if [[ -n "${first_file[$name]}" ]]; then
-			ln -sf "${first_file[$name]}" "$output_dir/$name"
-			print_message $YELLOW "    Linked $name → ${first_file[$name]} (already existed)"
+			target="${first_file[$name]}"
 		else
-			ln -sf "$real_target" "$output_dir/$name"
+			target="$real_target"
 			first_file[$name]="$real_target"
-			print_message $YELLOW "    Linked $name → $primary"
+		fi
+
+		rel_path=$(realpath --relative-to="$output_dir" "$target")
+		ln -sf "$rel_path" "$output_dir/$name"
+
+		if [[ "$target" == "$real_target" ]]; then
+			print_message $YELLOW "    Linked $name → $primary (relative)"
+		else
+			print_message $YELLOW "    Linked $name → ${first_file[$name]} (already existed, relative)"
 		fi
 	done
+
 	rm -rf "$temp_dir"
 	return 0
 }
